@@ -1,5 +1,6 @@
 #include <headers/visualiser.h>
 
+#include <headers/menu.h>
 #include <iostream>
 Visualiser::Visualiser(){
     init();
@@ -31,12 +32,15 @@ void Visualiser::init(){
     // newwin(HEIGH, WIDTH, X, Y)
     project_info_win = newwin(PROJECT_INFO_HEIGH, PROJECT_INFO_WIDTH, 0, 0);
     menu_win = newwin(MENU_HEIGH, MENU_WIDTH, PROJECT_INFO_HEIGH, 0);
+    info_win = newwin(INFO_HEIGHT, INFO_WIDTH, PROJECT_INFO_HEIGH, MENU_WIDTH);
     refresh();
 
     box(project_info_win, 0, 0);
     box(menu_win, 0, 0);
+    box(info_win, 0, 0);
     wrefresh(project_info_win);
     wrefresh(menu_win);
+    wrefresh(info_win);
 
     noecho(); // dont print getch() output
     attron(A_BOLD); // make the text BOLD
@@ -47,6 +51,18 @@ void Visualiser::init(){
     start_color();
     init_pair(1, COLOR_WHITE, BACKGROUND); // default colors
 
+    // create menu
+    //std::string letters = "afauvbaunvajvna";
+    //mvwprintw(info_win, 1, 2, letters.c_str());
+    //wrefresh(info_win);
+    //clear_box(info_win);
+    std::vector<MenuItem> items = {MenuItem("Option 1"), MenuItem("Option2")};
+    Menu* main_menu = new Menu(nullptr, items);
+    current_menu = main_menu;
+
+
+
+    
     program_start_time = std::chrono::high_resolution_clock::now();
 }
 
@@ -108,4 +124,25 @@ void Visualiser::write_menu(){
     int x = getmaxx(menu_win);
     int y getmaxy(menu_win);
 }
+
+void Visualiser::clear_box(WINDOW* win){
+    int size_x = getmaxx(win);
+    int size_y getmaxy(win);
+    std::string cl = " ";
+
+    for(int y = 1; y < size_y-1; y++)
+        for(int x = 1; x < size_x-1; x++){
+            wmove(win, y, x);
+            waddstr(win, cl.c_str());
+        }
+
+    wrefresh(win);
+}
+
+void Visualiser::render_menu(){
+    for(int row = 0; row < current_menu->get_size(); row++){
+        mvwprintw(menu_win, PADDING_Y*row + 1, 3, 
+        current_menu->get_items().at(row).get_name().c_str());
+    }
+};
 

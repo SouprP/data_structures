@@ -8,6 +8,7 @@
 // OT => Object Type
 // RT => Return Type
 // A ... => Arguments
+/*
 template<typename OT, typename RT, typename ... A>
 struct lambda_expression {
     OT _object;
@@ -18,18 +19,20 @@ struct lambda_expression {
 
     RT operator() (A ... args) const {
     return (_object.*_function)(args...);
-}
+    }
+};
+*/
 
 class MenuItem{
     private:
         std::string item_name;
-        lambda_expression
+        //lambda_expression expression;
     
     public:
         void on_select();
+        std::string get_name() { return item_name; };
         
-        MenuItem(std::string item_name, lambda_expression func);
-};
+        MenuItem(std::string item_name){ this->item_name = item_name; };
 };
 
 #endif
