@@ -38,6 +38,7 @@ class DoubleLinkedList{
 
             DoubleNode<T>* new_node = new DoubleNode<T>(element);
             new_node->next = head;
+            head->prev = new_node;
             head = new_node;
         };
 
@@ -51,7 +52,12 @@ class DoubleLinkedList{
             }
 
             DoubleNode<T>* new_node = new DoubleNode<T>(element);
+            //new_node->prev = tail;
+            //tail->next = new_node;
+            new_node->prev = tail;
             tail->next = new_node;
+            tail = new_node;
+
         };
 
         // fix some things
@@ -65,15 +71,14 @@ class DoubleLinkedList{
                 add_back(element);
                 return;
             }
-
-            size++;
+            //size++;
             // check if going from the back is better
             size_t pivot = size / 2;
             if(index <= pivot){
                 size_t i = 1;
                 //DoubleNode<T>* previous = head->next;
                 DoubleNode<T>* previous = head;
-                while(i < index - 1){
+                while(i < index - 3){
                     previous = previous->next;
                     i++;
                 }
@@ -88,12 +93,24 @@ class DoubleLinkedList{
             // go from back
             size_t i = size;
             DoubleNode<T>* previous = tail;
-            while(i > index + 1){
+            // get the node just before
+            // if the index is 7 we get node with index 6
+            while(i > index - 1){
                 previous = previous->prev;
                 i--;
             }
 
-            std::cout << "the node just one: " << previous->value;
+            DoubleNode<T>* new_node = new DoubleNode<T>(element);
+            DoubleNode<T>* temp = previous->next;
+            previous->next = new_node;
+            temp->prev = new_node;
+            new_node->prev = previous;
+            new_node->next = temp;
+
+            //std::cout << "the node just one: " << previous->value;
+            //std::cout << std::endl;
+
+            //std::cout << "size: " << i << std::endl;
             
 
         }
@@ -142,7 +159,10 @@ class DoubleLinkedList{
             }
         };
 
-        T* get(size_t index); // functions for going from back to mid / from front to mid
+        T* get(size_t index){
+
+        }; // functions for going from back to mid / from front to mid
+        
         std::vector<T> get_values(){
             DoubleNode<T>* current = head;
             std::vector<T> temp;
@@ -151,6 +171,10 @@ class DoubleLinkedList{
                 current = current->next;
             }
             return temp;
+        }
+
+        T* get_tail(){
+            return &tail->value;
         }
 };
 

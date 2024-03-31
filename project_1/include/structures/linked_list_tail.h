@@ -142,10 +142,13 @@ class LinkedListTail{
 
         // returns pointer to value
         // returning NULL is better than returning
-        // a random fucking -1 which might throw an exception
+        // -1 which might throw an exception
         T* get(size_t index){
+            if(index == size)
+                return get_tail();
+
             Node<T>* current = head;
-            for(size_t i = 0; i <= index; i++){
+            for(size_t i = 0; i < index - 1; i++){
                 if(current == nullptr)
                     return NULL;
 

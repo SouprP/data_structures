@@ -126,10 +126,10 @@ class LinkedList{
         }
 
         // returns pointer to value
-        // returning NULL is better than returning -1
+        // returning NULL is better than returning
         T* get(size_t index){
             Node<T>* current = head;
-            for(size_t i = 0; i < index; i++){
+            for(size_t i = 0; i < index - 1; i++){
                 if(current == nullptr)
                     return NULL;
 
