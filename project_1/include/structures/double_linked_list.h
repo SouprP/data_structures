@@ -152,16 +152,84 @@ class DoubleLinkedList{
             size_t pivot = size / 2;
             if(index <= pivot){
                 // go from front
+                size_t i = 0;
+                DoubleNode<T>* previous = head;
+                while(i < index - 2){
+                    previous = previous->next;
+                    i++;
+                }
+
+                DoubleNode<T>* node_to_del = previous->next;
+                DoubleNode<T>* temp = node_to_del->next;
+                delete node_to_del;
+                previous->next = temp;
             }
 
             if(index > pivot){
-                // go from back
+                size_t i = size;
+                DoubleNode<T>* previous = tail;
+                
+                while(i > index - 1){
+                    previous = previous->prev;
+                    i--;
+                }
+
+                DoubleNode<T>* node_to_del = previous->next;
+                DoubleNode<T>* temp = node_to_del->next;
+
+                previous->next = temp;
+                temp->prev = previous;
+                delete node_to_del;
             }
         };
 
         T* get(size_t index){
+            if(index == 1)
+                return &head->value;
+            
 
+            if(index >= size - 1)
+                return &tail->value;
+
+            // get middle index
+            size_t pivot = size / 2;
+            if(index <= pivot){
+                // go from front
+                size_t i = 0;
+                DoubleNode<T>* previous = head;
+                while(i < index - 2){
+                    previous = previous->next;
+                    i++;
+                }
+
+                return &previous->next->value;
+            }
+
+            if(index > pivot){
+                size_t i = size;
+                DoubleNode<T>* previous = tail;
+                
+                while(i > index - 1){
+                    previous = previous->prev;
+                    i--;
+                }
+
+                return &previous->next->value;
+            }
+            
+            return NULL;
         }; // functions for going from back to mid / from front to mid
+
+        bool search(T element){
+            DoubleNode<T>* current = head;
+            while(current != nullptr){
+                if(current->value == element)
+                    return true;
+
+                current = current->next;
+            }
+            return false;
+        };
         
         std::vector<T> get_values(){
             DoubleNode<T>* current = head;

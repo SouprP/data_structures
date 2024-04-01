@@ -158,6 +158,15 @@ class ArrayList{
             return arr;
         };
 
+        bool search(T element){
+            for(size_t i = 0; i < size; i++)
+                if(arr[i] == element)
+                    return true;
+
+            // return TRUE if found
+            return false;
+        }
+
 
 };
 

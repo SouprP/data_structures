@@ -142,6 +142,17 @@ class LinkedList{
             return &current->value;
         }
 
+        bool search(T element){
+            Node<T>* current = head;
+            while(current != nullptr){
+                if(current->value == element)
+                    return true;
+
+                current = current->next;
+            }
+            return false;
+        }
+
         std::vector<T> get_values(){
             Node<T>* current = head;
             std::vector<T> temp;

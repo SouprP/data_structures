@@ -1,6 +1,8 @@
 #include <iostream>
 #include <utils/generator.h>
 #include <utils/file.h>
+#include <utils/menu.h>
+//#include <utils/visualiser.h>
 
 #include <structures/array_list.h>
 #include <structures/linked_list.h>
@@ -17,8 +19,13 @@ int main(int argc, char* argv[]){
     //file.write("data_500k.txt", gen.generate_int(500000));
     //file.write("data_1m.txt", gen.generate_int(1000000));
     //file.write("data_test.txt", data);
-    //auto read = file.read("data_test.txt");
+    auto read = file.read("data_test.txt");
 
+    Menu menu = Menu();
+    //Visualiser *visuals = new Visualiser();
+    //getch();
+    //delete visuals;
+    
     /*
     ArrayList<int> array;
     for(auto obj : read)
@@ -63,20 +70,21 @@ int main(int argc, char* argv[]){
     //std::cout << *list_tail.get_tail() << std::endl;
     */
 
-    /*
-    DoubleLinkedList<int> d_list;
-    for(auto obj : read)
-        d_list.add_back(obj);
-
-    d_list.add(999, 9);
     
+    //DoubleLinkedList<int> d_list;
+    //for(auto obj : read)
+        //d_list.add_back(obj);
 
-    for(auto obj : d_list.get_values())
-        std::cout << obj << ", " << std::endl;
+    //d_list.add(999, 9);
+    
+    //d_list.remove(4);
+    //for(auto obj : d_list.get_values())
+        //std::cout << obj << ", " << std::endl;
 
-    d_list.remove_back();
-    std::cout << "tail: " << *d_list.get_tail();
-    */
+    //d_list.remove_back();
+    //d_list.remove(10);
+    //std::cout << "tail: " << *d_list.get_tail();
+    
 
     // DOUBLE - works
     // LIST_TAIL - check

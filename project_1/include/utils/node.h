@@ -1,12 +1,13 @@
 #ifndef NODE_H
 #define NODE_H
 
+/*
 class BaseNode{
 
 };
-
+*/
 template<typename T>
-class Node : BaseNode{
+class Node{
     public:
         T value;
         Node* next;
@@ -18,7 +19,7 @@ class Node : BaseNode{
 };
 
 template<typename T>
-class DoubleNode : BaseNode{
+class DoubleNode{
     public:
         T value;
         DoubleNode* prev;

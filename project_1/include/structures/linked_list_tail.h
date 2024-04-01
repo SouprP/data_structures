@@ -68,13 +68,13 @@ class LinkedListTail{
         void add(T element, size_t index){
             if(index == 1){
                 add_front(element);
-                std::cout << "front add" << std::endl;
+                //std::cout << "front add" << std::endl;
                 return;
             }
 
             if(index > size){
                 add_back(element);
-                std::cout << "back add" << std::endl;
+                //std::cout << "back add" << std::endl;
                 return;
             }
 
@@ -125,7 +125,7 @@ class LinkedListTail{
 
             // gets the node that just before where we want to insert a new node
             size_t i = 0;
-            Node<T>* previous = head->next;
+            Node<T>* previous = head;;
             while(i < index - 3){
                 previous = previous->next;
                 i++;
@@ -160,6 +160,17 @@ class LinkedListTail{
             
             return &current->value;
         };
+
+        bool search(T element){
+            Node<T>* current = head;
+            while(current != nullptr){
+                if(current->value == element)
+                    return true;
+
+                current = current->next;
+            }
+            return false;
+        }
 
         std::vector<T> get_values(){
             Node<T>* current = head;
