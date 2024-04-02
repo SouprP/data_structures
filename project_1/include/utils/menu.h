@@ -246,6 +246,7 @@ class Menu{
                 d_list.add_front(obj);
             }
 
+            
             start = timeNow();
             array.add_back(OBJECT_ADD);
             end = timeNow();

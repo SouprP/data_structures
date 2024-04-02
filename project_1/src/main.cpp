@@ -45,7 +45,8 @@ int main(int argc, char* argv[]){
     for(auto data_size : SIZES){
         std::cout << data_size << std::endl << std::endl;
 
-        size_t pivot = data_size / 2;
+        //size_t pivot = 0;
+        size_t pivot = 3 * data_size / 4;
 
         for(int i = 0; i < 10; i++){
             gen = new Generator();
@@ -66,53 +67,62 @@ int main(int argc, char* argv[]){
                 
             //uint8_t obj_to_find = data[pivot];
             uint16_t obj_to_find = 999;
+            //array.remove_back();
+            //list.remove_back();
+            //list_tail.remove_back();
+            //d_list.remove_back();
+
+            //array.add(999, pivot);
+            //list.add(999, pivot);
+            //list_tail.add(999, pivot);
+            //d_list.add(999, pivot);
             //std::cout << "Found?  " << array.search(obj_to_find) << std::endl;
 
             start = timeNow();
             //array.add_front(OBJECT_ADD);
             //array.remove_front();
-            //array.add_back(OBJECT_ADD);
+            array.add_back(OBJECT_ADD);
             //array.remove_back();
             //array.add(OBJECT_ADD, pivot);
             //array.remove(pivot);
             //array.get(pivot);
-            array.search(obj_to_find);
+            //array.search(obj_to_find);
             end = timeNow();
             overall_time_array += duration(end - start);
 
             start = timeNow();
             //list.add_front(OBJECT_ADD);
             //list.remove_front();
-            //list.add_back(OBJECT_ADD);
+            list.add_back(OBJECT_ADD);
             //list.remove_back();
             //list.add(OBJECT_ADD, pivot);
             //list.remove(pivot);
             //list.get(pivot);
-            list.search(obj_to_find);
+            //list.search(obj_to_find);
             end = timeNow();
             overall_time_list += duration(end - start);
 
             start = timeNow();
             //list_tail.add_front(OBJECT_ADD);
             //list_tail.remove_front();
-            //list_tail.add_back(OBJECT_ADD);
+            list_tail.add_back(OBJECT_ADD);
             //list_tail.remove_back();
             //list_tail.add(OBJECT_ADD, pivot);
             //list_tail.remove(pivot);
             //list_tail.get(pivot);
-            list_tail.search(obj_to_find);
+            //list_tail.search(obj_to_find);
             end = timeNow();
             overall_time_tail += duration(end - start);
 
             start = timeNow();
             //d_list.add_front(OBJECT_ADD);
             //d_list.remove_front();
-            //d_list.add_back(OBJECT_ADD);
+            d_list.add_back(OBJECT_ADD);
             //d_list.remove_back();
             //d_list.add(OBJECT_ADD, pivot);
             //d_list.remove(pivot);
             //d_list.get(pivot);
-            d_list.search(obj_to_find);
+            //d_list.search(obj_to_find);
             end = timeNow();
             overall_time_double += duration(end - start);
 

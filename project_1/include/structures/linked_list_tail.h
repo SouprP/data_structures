@@ -54,15 +54,19 @@ class LinkedListTail{
                 return;
             }
 
-            Node<T>* current = head;
-            while(current->next != nullptr)
-                current = current->next;
+            //Node<T>* current = head;
+            //while(current->next != nullptr)
+                //current = current->next;
 
-            Node<T>* new_node = new Node<T>(element);
-            current->next = new_node;
-            tail = new_node;
+            //Node<T>* new_node = new Node<T>(element);
+            //current->next = new_node;
+            //tail = new_node;
             //std::cout << "Tail: " 
                 //<< tail->value << std::endl;
+            Node<T>* new_node = new Node<T>(element);
+            tail->next = new_node;
+            tail = new_node;
+            
         };
 
         void add(T element, size_t index){
