@@ -6,9 +6,9 @@
 template<typename T>
 class ArrayList{
     private:
-        T* arr;
-        size_t capacity;
-        size_t size;
+        T* arr; // pointer to first element
+        size_t capacity; // max size
+        size_t size; // current size of array
 
     public:
         ArrayList(){
@@ -38,9 +38,11 @@ class ArrayList{
             for(size_t i = 0; i < size; i++)
                 temp_arr[i + 1] = arr[i];
                 
+            // delete old contents of arr and copy new values from temp_arr
             delete[] arr;
             arr = temp_arr;
 
+            // add at front
             arr[0] = element;
             size++;
 
@@ -73,31 +75,37 @@ class ArrayList{
             if(index >= size)
                 return;
 
+            // increase capacity
             if(size == capacity)
                 capacity *= 2;
 
+            // add at front
             if(index == 0){
                 add_front(element);
                 return;
             }
 
+            // add at back
             if(index >= size){
                 add_back(element);
                 return;
             }
 
              // if it doesnt need to be at the end
-             // or at the front
+             // or at the front => create new arr
              T* temp_arr = new T[capacity];
-
+            
+            // copy elements before the index
              for(int i = 0; i < index; i ++)
                 temp_arr[i] = arr[i];
 
             temp_arr[index] = element;
 
+            // copy elements after index
             for(int i = index + 1; i < size; i++)
                 temp_arr[i] = arr[i];
 
+            // delete old contents of arr and copy new values from temp_arr
             delete[] arr;
             arr = temp_arr;
             size++;
@@ -106,11 +114,12 @@ class ArrayList{
         void remove_front(){
             T* temp_arr = new T[capacity];
 
-            // copy all elements, excepet the first one
+            // copy all elements, except the first one
             // moves them one place back
             for(size_t i = 1; i < size; i++)
                 temp_arr[i - 1] = arr[i];
 
+            // delete old contents of arr and copy new values from temp_arr
             delete[] arr;
             arr = temp_arr;
 
@@ -119,7 +128,8 @@ class ArrayList{
 
         void remove_back(){
             // just decreasse the size
-            // the amount of bytes the array uses is still the same
+            // and delete the value at the end
+            delete arr[size - 1];
             size--;
         }
 
@@ -134,9 +144,7 @@ class ArrayList{
 
             
             // there is no need to remove the last element
-            // we can just decrease the size
-            // byte size of the array is still the same
-            // whether we remove it or not
+            delete arr[size - 1];
             size--;
         };
 
@@ -148,16 +156,20 @@ class ArrayList{
             return arr[index];
         };
 
-        
-        // functions for utility calls
+        /////////////////////////////////////////////////
+        //
+        //           functions for utility calls
+
         size_t get_size(){
             return size;
         };
 
+        // get pointer to first element
         T* get_arr(){
             return arr;
         };
 
+        // find an element
         bool search(T element){
             for(size_t i = 0; i < size; i++)
                 if(arr[i] == element)

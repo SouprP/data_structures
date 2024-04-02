@@ -28,24 +28,31 @@ class LinkedList{
         };
 
         void add_front(T element){
+            size++;
+            // the list is empty, just add at head and do nothing
             if(head == nullptr){
                 head = new Node<T>(element);
                 return;
             }
 
+            // get the current head element
+            // move it one place forward
             Node<T>* current = new Node<T>(element);
             current->next = head;
             head = current;
-            size++;
         };
 
         void add_back(T element){
             size++;
+
+            // add at front
             if(head == nullptr){
                 head = new Node<T>(element);
                 return;
             }
 
+            // go to the current last element
+            // and insert the new element there
             Node<T>* current = head;
             while(current->next != nullptr)
                 current = current->next;
@@ -54,11 +61,13 @@ class LinkedList{
         };
 
         void add(T element, size_t index){
+            // add at front
             if(index == 1){
                 add_front(element);
                 return;
             }
 
+            // add at the back
             if(index >= size + 1){
                 add_back(element);
                 return;
@@ -81,6 +90,8 @@ class LinkedList{
         };
 
         void remove_front(){
+            // get the first node and remove
+            // and also make the next node head
             Node<T>* current = head->next;
             delete head;
             head = current;
@@ -88,21 +99,25 @@ class LinkedList{
         };
 
         void remove_back(){
+            // get the node just before our
             Node<T>* current = head;
             while(current->next->next != nullptr)
                 current = current->next;
 
+            // deleting
             delete current->next;
             current->next = nullptr;
             size--;
         }
 
         void remove(size_t index){
+            // remove at front
             if(index == 1){
                 remove_front();
                 return;
             }
 
+            // remove at the back
             if(index >= size + 1){
                 remove_back();
                 return;
@@ -125,9 +140,9 @@ class LinkedList{
             size--;
         }
 
-        // returns pointer to value
-        // returning NULL is better than returning
         T* get(size_t index){
+            // go to the provided index
+            // and get the value
             Node<T>* current = head;
             for(size_t i = 0; i < index - 1; i++){
                 if(current == nullptr)
@@ -143,6 +158,7 @@ class LinkedList{
         }
 
         bool search(T element){
+            // go through all elements
             Node<T>* current = head;
             while(current != nullptr){
                 if(current->value == element)
@@ -154,6 +170,7 @@ class LinkedList{
         }
 
         std::vector<T> get_values(){
+            // get all values and push them into a vector
             Node<T>* current = head;
             std::vector<T> temp;
             while(current != nullptr){

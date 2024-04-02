@@ -18,5 +18,17 @@ A collection of projects to research diffrent data structures.
 - [x] remove_front
 - [x] remove_back
 - [x] remove
-- [ ] search
-    
+- [x] search
+
+### Compiling
+```
+cd project_1
+
+mkdir build
+
+cd build
+
+cmake ..
+
+make
+```

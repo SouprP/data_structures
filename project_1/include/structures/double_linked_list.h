@@ -20,6 +20,8 @@ class DoubleLinkedList{
 
         ~DoubleLinkedList(){
             DoubleNode<T>* current = head;
+
+            // delete all elements
             while(current != nullptr){
                 DoubleNode<T>* temp = current;
                 current = current->next;
@@ -29,6 +31,8 @@ class DoubleLinkedList{
 
         void add_front(T element){
             size++;
+
+            // the list is empty, just add at head and do nothing
             if(head == nullptr){
                 DoubleNode<T>* new_node = new DoubleNode<T>(element);
                 head = new_node;
@@ -36,6 +40,8 @@ class DoubleLinkedList{
                 return;
             }
 
+            // get the current head element
+            // move it one place forward
             DoubleNode<T>* new_node = new DoubleNode<T>(element);
             new_node->next = head;
             head->prev = new_node;
@@ -44,6 +50,8 @@ class DoubleLinkedList{
 
         void add_back(T element){
             size++;
+
+            // add at front
             if(head == nullptr){
                 DoubleNode<T>* new_node = new DoubleNode<T>(element);
                 head = new_node;
@@ -51,22 +59,22 @@ class DoubleLinkedList{
                 return;
             }
 
+            // get the tail and add the new element there
             DoubleNode<T>* new_node = new DoubleNode<T>(element);
-            //new_node->prev = tail;
-            //tail->next = new_node;
             new_node->prev = tail;
             tail->next = new_node;
             tail = new_node;
 
         };
 
-        // fix some things
         void add(T element, size_t index){
+            // add at front
             if(index == 1){
                 add_front(element);
                 return;
             }
 
+            // add at the back
             if(index > size){
                 add_back(element);
                 return;
@@ -76,13 +84,15 @@ class DoubleLinkedList{
             size_t pivot = size / 2;
             if(index <= pivot){
                 size_t i = 1;
-                //DoubleNode<T>* previous = head->next;
+
+                // get the node just before
                 DoubleNode<T>* previous = head;
                 while(i < index - 3){
                     previous = previous->next;
                     i++;
                 }
-                //std::cout << previous->value << std::endl;
+
+                // insert a new node
                 DoubleNode<T>* temp = previous->next;
                 DoubleNode<T>* new_node = new DoubleNode<T>(element);
                 previous->next = new_node;
@@ -100,25 +110,22 @@ class DoubleLinkedList{
                 i--;
             }
 
+            // insert a new node
             DoubleNode<T>* new_node = new DoubleNode<T>(element);
             DoubleNode<T>* temp = previous->next;
             previous->next = new_node;
             temp->prev = new_node;
             new_node->prev = previous;
             new_node->next = temp;
-
-            //std::cout << "the node just one: " << previous->value;
-            //std::cout << std::endl;
-
-            //std::cout << "size: " << i << std::endl;
-            
-
         }
 
         void remove_front(){
+            // no need to delete anything
             if(head == nullptr)
                 return;
 
+            // delete the first node
+            // and make the next node head
             DoubleNode<T>* next_node = head->next;
             delete head;
             head = next_node;
@@ -126,9 +133,12 @@ class DoubleLinkedList{
         };
 
         void remove_back(){
+            // no need to delete anything
             if(tail == nullptr)
                 return;
 
+            // delete the flaast node
+            // and make the previous node head
             DoubleNode<T>* prev_node = tail->prev;
             prev_node->next = nullptr;
             delete tail;
@@ -136,29 +146,35 @@ class DoubleLinkedList{
             size--;
         };
 
-        // add things
         void remove(size_t index){
+            // remove at front
             if(index == 1){
                 remove_front();
                 return;
             }
 
+            // remove at the back
             if(index >= size - 1){
                 remove_back();
                 return;
             }
 
             // get middle index
+            // and check if its better go from the back
+            // or the front
             size_t pivot = size / 2;
             if(index <= pivot){
                 // go from front
                 size_t i = 0;
+
+                // get the node just before our
                 DoubleNode<T>* previous = head;
                 while(i < index - 2){
                     previous = previous->next;
                     i++;
                 }
 
+                // deletion and swapping
                 DoubleNode<T>* node_to_del = previous->next;
                 DoubleNode<T>* temp = node_to_del->next;
                 delete node_to_del;
@@ -169,11 +185,13 @@ class DoubleLinkedList{
                 size_t i = size;
                 DoubleNode<T>* previous = tail;
                 
+                // get the node just before
                 while(i > index - 1){
                     previous = previous->prev;
                     i--;
                 }
 
+                // deletion and swapping
                 DoubleNode<T>* node_to_del = previous->next;
                 DoubleNode<T>* temp = node_to_del->next;
 
@@ -184,14 +202,17 @@ class DoubleLinkedList{
         };
 
         T* get(size_t index){
+            // head node
             if(index == 1)
                 return &head->value;
             
-
+            // tail node
             if(index >= size - 1)
                 return &tail->value;
 
             // get middle index
+            // and check if its better go from the back
+            // or the front
             size_t pivot = size / 2;
             if(index <= pivot){
                 // go from front
@@ -218,9 +239,10 @@ class DoubleLinkedList{
             }
             
             return NULL;
-        }; // functions for going from back to mid / from front to mid
+        }; 
 
         bool search(T element){
+            // go through all elements
             DoubleNode<T>* current = head;
             while(current != nullptr){
                 if(current->value == element)
@@ -232,6 +254,7 @@ class DoubleLinkedList{
         };
         
         std::vector<T> get_values(){
+            // get all values and push them into a vector
             DoubleNode<T>* current = head;
             std::vector<T> temp;
             while(current != nullptr){
