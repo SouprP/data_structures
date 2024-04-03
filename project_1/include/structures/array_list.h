@@ -129,7 +129,7 @@ class ArrayList{
         void remove_back(){
             // just decreasse the size
             // and delete the value at the end
-            delete arr[size - 1];
+            //delete arr[size - 1];
             size--;
         }
 
@@ -144,7 +144,7 @@ class ArrayList{
 
             
             // there is no need to remove the last element
-            delete arr[size - 1];
+           // delete arr[size - 1];
             size--;
         };
 

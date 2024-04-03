@@ -78,7 +78,9 @@ int main(int argc, char* argv[]){
             //d_list.add(999, pivot);
             //std::cout << "Found?  " << array.search(obj_to_find) << std::endl;
 
+            
             start = timeNow();
+            for(int i = 0; i < 10; i++)
             //array.add_front(OBJECT_ADD);
             //array.remove_front();
             array.add_back(OBJECT_ADD);
@@ -91,6 +93,7 @@ int main(int argc, char* argv[]){
             overall_time_array += duration(end - start);
 
             start = timeNow();
+            for(int i = 0; i < 10; i++)
             //list.add_front(OBJECT_ADD);
             //list.remove_front();
             list.add_back(OBJECT_ADD);
@@ -103,6 +106,7 @@ int main(int argc, char* argv[]){
             overall_time_list += duration(end - start);
 
             start = timeNow();
+            for(int i = 0; i < 10; i++)
             //list_tail.add_front(OBJECT_ADD);
             //list_tail.remove_front();
             list_tail.add_back(OBJECT_ADD);
@@ -115,6 +119,7 @@ int main(int argc, char* argv[]){
             overall_time_tail += duration(end - start);
 
             start = timeNow();
+            for(int i = 0; i < 10; i++)
             //d_list.add_front(OBJECT_ADD);
             //d_list.remove_front();
             d_list.add_back(OBJECT_ADD);
@@ -127,10 +132,10 @@ int main(int argc, char* argv[]){
             overall_time_double += duration(end - start);
 
         }
-        std::cout << "Arrray    :  " << overall_time_array / 10 << "ns" << std::endl;
-        std::cout << "LinkedList:  " << overall_time_list / 10 << "ns" << std::endl;
-        std::cout << "LInkedTail:  " << overall_time_tail / 10 << "ns" << std::endl;
-        std::cout << "DoubleList:  " << overall_time_double / 10 << "ns" << std::endl;
+        std::cout << "Arrray    :  " << overall_time_array / 100 << "ns" << std::endl;
+        std::cout << "LinkedList:  " << overall_time_list / 100 << "ns" << std::endl;
+        std::cout << "LInkedTail:  " << overall_time_tail / 100 << "ns" << std::endl;
+        std::cout << "DoubleList:  " << overall_time_double / 100 << "ns" << std::endl;
         std::cout << std::endl;
     }
 
