@@ -24,6 +24,7 @@ typedef std::chrono::high_resolution_clock::time_point TimeVar;
 #define DATA_SIZE_7 1000000
 
 #define OBJECT_ADD 999
+#define LOOPS 100
 
 std::vector<size_t> SIZES = {DATA_SIZE_1, DATA_SIZE_2, 
     DATA_SIZE_3, DATA_SIZE_4, DATA_SIZE_5, DATA_SIZE_6, DATA_SIZE_7};
@@ -48,7 +49,7 @@ int main(int argc, char* argv[]){
         //size_t pivot = 0;
         size_t pivot = 3 * data_size / 4;
 
-        for(int i = 0; i < 10; i++){
+        for(int i = 0; i < LOOPS; i++){
             gen = new Generator();
             data = gen->generate_int(data_size);
 
@@ -80,7 +81,7 @@ int main(int argc, char* argv[]){
 
             
             start = timeNow();
-            for(int i = 0; i < 10; i++)
+            for(int i = 0; i < LOOPS; i++)
             //array.add_front(OBJECT_ADD);
             //array.remove_front();
             array.add_back(OBJECT_ADD);
@@ -93,7 +94,7 @@ int main(int argc, char* argv[]){
             overall_time_array += duration(end - start);
 
             start = timeNow();
-            for(int i = 0; i < 10; i++)
+            for(int i = 0; i < LOOPS; i++)
             //list.add_front(OBJECT_ADD);
             //list.remove_front();
             list.add_back(OBJECT_ADD);
@@ -106,7 +107,7 @@ int main(int argc, char* argv[]){
             overall_time_list += duration(end - start);
 
             start = timeNow();
-            for(int i = 0; i < 10; i++)
+            for(int i = 0; i < LOOPS; i++)
             //list_tail.add_front(OBJECT_ADD);
             //list_tail.remove_front();
             list_tail.add_back(OBJECT_ADD);
@@ -119,7 +120,7 @@ int main(int argc, char* argv[]){
             overall_time_tail += duration(end - start);
 
             start = timeNow();
-            for(int i = 0; i < 10; i++)
+            for(int i = 0; i < LOOPS; i++)
             //d_list.add_front(OBJECT_ADD);
             //d_list.remove_front();
             d_list.add_back(OBJECT_ADD);
@@ -132,10 +133,10 @@ int main(int argc, char* argv[]){
             overall_time_double += duration(end - start);
 
         }
-        std::cout << "Arrray    :  " << overall_time_array / 100 << "ns" << std::endl;
-        std::cout << "LinkedList:  " << overall_time_list / 100 << "ns" << std::endl;
-        std::cout << "LInkedTail:  " << overall_time_tail / 100 << "ns" << std::endl;
-        std::cout << "DoubleList:  " << overall_time_double / 100 << "ns" << std::endl;
+        std::cout << "Arrray    :  " << overall_time_array / (LOOPS*LOOPS) << "ns" << std::endl;
+        std::cout << "LinkedList:  " << overall_time_list / (LOOPS*LOOPS) << "ns" << std::endl;
+        std::cout << "LInkedTail:  " << overall_time_tail / (LOOPS*LOOPS) << "ns" << std::endl;
+        std::cout << "DoubleList:  " << overall_time_double / (LOOPS*LOOPS) << "ns" << std::endl;
         std::cout << std::endl;
     }
 
