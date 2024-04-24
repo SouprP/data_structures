@@ -3,12 +3,11 @@
 
 #include <iostream>
 #include <utils/node.h>
-#include <structures/heap.h>
 
 template<typename T>
 class PriorityQueue_Heap{
     private:
-        std::vector<Node<int>> queue;
+        std::vector<Pair<int>> queue;
         size_t size;
 
         size_t parent(size_t index){
@@ -24,7 +23,7 @@ class PriorityQueue_Heap{
         }
 
         void swap(size_t index_1, size_t index_2){
-            Node<T> temp = queue[index_1];
+            Pair<T> temp = queue[index_1];
             queue[index_1] = queue[index_2];
             queue[index_2] = temp;
         }
@@ -59,10 +58,14 @@ class PriorityQueue_Heap{
         }
         
     public:
+        PriorityQueue_Heap(){
+            size = 0;
+        }
+
         // insert a new value into the priority queue
         void insert(T value, size_t priority){
-            // place the new Node<T> at the end of queue
-            queue.push_back(Node<T>(value, priority));
+            // place the new Pair<T> at the end of queue
+            queue.push_back(Pair<T>(value, priority));
             size++;
 
             // remake the heap
@@ -113,7 +116,7 @@ class PriorityQueue_Heap{
         T extract_max(){
             // yes I do love making people suffer with errors 3>
             if(size == 0)
-                throw std::out_of_range("Priorit queue is empty");
+                throw std::out_of_range("Priority queue is empty");
 
             // root element => max value
             T max_value = queue[0].value;
@@ -131,7 +134,7 @@ class PriorityQueue_Heap{
         // get root, but dont remove it
         T find_max(){
             if(size == 0)
-                throw std::out_of_range("Priorit queue is empty");
+                throw std::out_of_range("Priority queue is empty");
 
             return queue[0].value;
         }
@@ -143,7 +146,7 @@ class PriorityQueue_Heap{
 
         // get the queue vector
         // only used for testing
-        std::vector<Node<T>> get_vector(){
+        std::vector<Pair<T>> get_values(){
             return queue;
         }
 
