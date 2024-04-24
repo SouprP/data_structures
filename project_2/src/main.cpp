@@ -2,6 +2,8 @@
 #include <utils/generator.h>
 #include <chrono>
 
+#include <structures/priority_queue_heap.h>
+
 typedef std::chrono::high_resolution_clock::time_point TimeVar;
 
 #define duration(a) std::chrono::duration_cast<std::chrono::nanoseconds>(a).count()
@@ -22,6 +24,8 @@ typedef std::chrono::high_resolution_clock::time_point TimeVar;
 std::vector<size_t> SIZES = {DATA_SIZE_1, DATA_SIZE_2, 
     DATA_SIZE_3, DATA_SIZE_4, DATA_SIZE_5, DATA_SIZE_6, DATA_SIZE_7};
 
-int main(int argc, char* argv[]){
+// efficiency tests
 
+int main(int argc, char* argv[]){
+    return 0;
 }

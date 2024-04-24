@@ -1,28 +1,29 @@
 # data_structures
 
 A collection of projects to research diffrent data structures.
-## Project 1
+## [Project 1](project_1)
 
-- #### Dynamic Array:
+- #### Dynamic Array
 
-- #### Linked List with head,
+- #### Linked List with head
 
-- #### Linked List with head and tail,
+- #### Linked List with head and tail
 
-- #### Double Linked List.
+- #### Double Linked List
 
-### All data structures should have these functions:
-- [x] add_front
-- [x] add_back
-- [x] add
-- [x] remove_front
-- [x] remove_back
-- [x] remove
-- [x] search
+## [Project 2](project_2)
+
+- #### Priority Queue using Binary Heap
+
+- #### Priority Queue using X
+
+## Project 3
+
+- #### TBA
 
 ### Compiling
 ```
-cd project_1
+cd project_X
 
 mkdir build
 
@@ -31,4 +32,6 @@ cd build
 cmake ..
 
 make
+
+./efficiency_experiments
 ```

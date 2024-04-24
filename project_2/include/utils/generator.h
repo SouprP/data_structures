@@ -13,12 +13,11 @@
 #define CAPITAL_ADD 32
 
 class Generator{
-    private:
+    public:
         int random(size_t low, size_t high){
             return rand() % high + low;
         };
 
-    public:
         std::vector<int> generate_int(size_t size){
             std::vector<int> buffer;
 
