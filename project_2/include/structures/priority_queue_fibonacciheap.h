@@ -1,7 +1,3 @@
-//
-// Created by Gaming PC on 14.05.2024.
-//
-
 #ifndef PROJECT_2_PRIORITY_QUEUE_FIBONACCIHEAP_H
 #define PROJECT_2_PRIORITY_QUEUE_FIBONACCIHEAP_H
 
@@ -124,15 +120,6 @@ int FibonacciHeap::extractMax() {
     delete z;
     return value;
 }
-
-// Delete a priority
-//void FibonacciHeap::deleteKey(node* x) {
-//    increaseKey(x, INT_MAX);
-//    node* max = extractMax();
-//    if (max != nullptr) {
-//        delete max;
-//    }
-//}
 
 // Find max
 node* FibonacciHeap::findMax() {
@@ -289,11 +276,6 @@ void FibonacciHeap::cascadingCut(node* y) {
         }
     }
 }
-
-// Get size
-//int FibonacciHeap::getSize() {
-//    return nH;
-//}
 
 // Display the heap
 void FibonacciHeap::display(node* H) {
