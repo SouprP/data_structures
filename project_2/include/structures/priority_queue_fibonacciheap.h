@@ -6,7 +6,6 @@
 #define PROJECT_2_PRIORITY_QUEUE_FIBONACCIHEAP_H
 
 #include <cmath>
-#include <cstdlib>
 #include <iostream>
 
 using namespace std;
@@ -21,6 +20,7 @@ struct node {
     node *left;
     node *right;
     bool mark;
+    node(int val, int prio) : value(val), priority(prio), mark(false), parent(nullptr), child(nullptr), left(this), right(this), degree(0) {};
 };
 
 // Implementation of Fibonacci heap
@@ -32,22 +32,33 @@ private:
     void consolidate();
     void cut(node* x, node* y);
     void cascadingCut(node* y);
-    void link(node* y, node* x);
+    static void link(node* y, node* x);
+    void deleteAll(node* n) {
+        if (n != nullptr) {
+            node* x = n;
+            do {
+                node* d = x->right;
+                deleteAll(x->child);
+                delete x;
+                x = d;
+            } while (x != n);
+        }
+    }
 
 public:
     FibonacciHeap();
     ~FibonacciHeap();
     node* insert(int priority , int value);
-    node* extractMax();
+    int extractMax();
     node* findMax();
     void increaseKey(node* x, int newpriority);
     void decreaseKey(node* x, int newpriority);
     void modifyKey(int value, int newpriority);
-    void deleteKey(node* x);
-    int getSize();
+    //void deleteKey(node* x);
+    int getSize(){return nH;};
 
-    void display(node* H);
-    node* find(node* H, int priority);
+    static void display(node* H);
+    node* find(node* H, int value);
 };
 
 // Initialize heap
@@ -58,18 +69,12 @@ FibonacciHeap::FibonacciHeap() {
 
 // Destructor
 FibonacciHeap::~FibonacciHeap() {
-    // Add code to delete all nodes if needed
+    deleteAll(H);
 }
 
 // Create and insert node
 node* FibonacciHeap::insert(int priority, int value) {
-    node* x = new node;
-    x->value = value;
-    x->priority = priority;
-    x->degree = 0;
-    x->parent = nullptr;
-    x->child = nullptr;
-    x->mark = false;
+    node* x = new node(value,priority);
 
     if (H != nullptr) {
         H->left->right = x;
@@ -88,8 +93,9 @@ node* FibonacciHeap::insert(int priority, int value) {
 }
 
 // Extract max
-node* FibonacciHeap::extractMax() {
+int FibonacciHeap::extractMax() {
     node* z = H;
+    int value = z->value;
     if (z != nullptr) {
         node* x = z->child;
         if (x != nullptr) {
@@ -115,8 +121,18 @@ node* FibonacciHeap::extractMax() {
         }
         nH--;
     }
-    return z;
+    delete z;
+    return value;
 }
+
+// Delete a priority
+//void FibonacciHeap::deleteKey(node* x) {
+//    increaseKey(x, INT_MAX);
+//    node* max = extractMax();
+//    if (max != nullptr) {
+//        delete max;
+//    }
+//}
 
 // Find max
 node* FibonacciHeap::findMax() {
@@ -241,13 +257,6 @@ void FibonacciHeap::modifyKey(int value, int newpriority) {
     } else cout << "Error: Value not found in the heap." << endl;
 }
 
-//node* found = fh.find(fh.findMax(), 7);
-//if (found != nullptr) {
-//fh.modifyKey(found, 2);
-//}
-
-
-
 // Cut a node
 void FibonacciHeap::cut(node* x, node* y) {
     if (x->right == x) {
@@ -281,19 +290,10 @@ void FibonacciHeap::cascadingCut(node* y) {
     }
 }
 
-// Delete a priority
-void FibonacciHeap::deleteKey(node* x) {
-    increaseKey(x, INT_MAX);
-    node* max = extractMax();
-    if (max != nullptr) {
-        delete max;
-    }
-}
-
 // Get size
-int FibonacciHeap::getSize() {
-    return nH;
-}
+//int FibonacciHeap::getSize() {
+//    return nH;
+//}
 
 // Display the heap
 void FibonacciHeap::display(node* H) {
@@ -338,9 +338,9 @@ node* FibonacciHeap::find(node* H, int value) {
 //
 //    fh.display(fh.findMax());
 //
-//    node* maxNode = fh.extractMax();
-//    if (maxNode != nullptr) {
-//        cout << "The node with maximum priority: " << maxNode->priority << endl;
+//    int maxNode = fh.extractMax();
+//    if (maxNode != -1) {
+//        cout << "The node with maximum priority: " << maxNode << endl;
 //    } else {
 //        cout << "Heap is empty" << endl;
 //    }
@@ -348,27 +348,24 @@ node* FibonacciHeap::find(node* H, int value) {
 //
 //    fh.modifyKey(7, 2);
 //    maxNode = fh.extractMax();
-//    if (maxNode != nullptr) {
-//        cout << "The node with maximum priority: " << maxNode->value << endl;
+//    cout<<fh.getSize()<<endl;
+//    if (maxNode != -1) {
+//        cout << "The node with maximum priority: " << maxNode << endl;
 //    } else cout << "Heap is empty" << endl;
 //    maxNode = fh.extractMax();
-//    if (maxNode != nullptr) {
-//        cout << "The node with maximum priority: " << maxNode->value << endl;
+//    if (maxNode != -1) {
+//        cout << "The node with maximum priority: " << maxNode << endl;
 //    } else cout << "Heap is empty" << endl;
 //    maxNode = fh.extractMax();
-//    if (maxNode != nullptr) {
-//        cout << "The node with maximum priority: " << maxNode->value << endl;
+//    if (maxNode != -1) {
+//        cout << "The node with maximum priority: " << maxNode << endl;
 //    } else cout << "Heap is empty" << endl;
-//    cout<< fh.extractMax()->value << endl;
-//    cout<<fh.getSize();
-//
-//
+//    cout<< fh.extractMax() << endl;
 //
 //    fh.display(fh.findMax());
 //
 //    return 0;
 //}
-
 
 
 #endif //PROJECT_2_PRIORITY_QUEUE_FIBONACCIHEAP_H
