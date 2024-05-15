@@ -2,7 +2,9 @@
 
 - #### Priority Queue using Binary Heap
 
-- #### Priority Queue using X
+- #### Priority Queue using Linked List
+
+- #### Priority Queue using Fibonacci Heap
 
 ### All data structures should have these functions:
 - [x] insert
