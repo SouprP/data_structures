@@ -42,7 +42,7 @@ int main(int argc, char* argv[]){
     //std::cout << "CURRENT OP:  EXTRACT_MAX" << std::endl;
     //std::cout << "CURRENT OP:  PEEK" << std::endl;
     //std::cout << "CURRENT OP:  MODIFY_KEY" << std::endl;
-    std::cout << "CURRENT OP:  RETURN SIZE" << std::endl;
+    //std::cout << "CURRENT OP:  RETURN SIZE" << std::endl;
 
     for(auto size : SIZES){
         std::cout << "======================" << std::endl << std::endl;
@@ -68,44 +68,47 @@ int main(int argc, char* argv[]){
             for(int item : items){
                 queue_heap.insert(item, gen.random(MIN_PRIO, MAX_PRIO));
                 queue_list.insert(item, gen.random(MIN_PRIO, MAX_PRIO));
-                queue_fib.insert(item, gen.random(MIN_PRIO, MAX_PRIO));
+                queue_fib.insert(gen.random(MIN_PRIO, MAX_PRIO), item);
             }
 
             start = timeNow();
-            //queue_heap.insert(100, gen.random(MIN_PRIO, MAX_PRIO)); //DONE
-            //queue_heap.extract_max();
-            //queue_heap.find_max();
-            //queue_heap.modify_key(ITEM_CHANGE, PRIORITY_MOD);
-            queue_heap.get_size();
+            for(size_t i = 0; i < LOOPS; i++)
+                queue_heap.insert(100, gen.random(MIN_PRIO, MAX_PRIO)); //DONE
+                //queue_heap.extract_max();
+                //queue_heap.find_max();
+                //queue_heap.modify_key(ITEM_CHANGE, gen.random(MIN_PRIO, MAX_PRIO));
+                //queue_heap.get_size();
             end = timeNow();
             heap_time += duration(end - start);
 
 
 
             start = timeNow();
-            //queue_list.insert(100, gen.random(MIN_PRIO, MAX_PRIO));
-            //queue_list.extract_max();
-            //queue_list.find_max();
-            //queue_list.modify_key(ITEM_CHANGE, PRIORITY_MOD);
-            queue_list.get_size();
+            for(size_t i = 0; i < LOOPS; i++)
+                queue_list.insert(100, gen.random(MIN_PRIO, MAX_PRIO));
+                //queue_list.extract_max();
+                //queue_list.find_max();
+                //queue_list.modify_key(ITEM_CHANGE, gen.random(MIN_PRIO, MAX_PRIO));
+                //queue_list.get_size();
             end = timeNow();
             list_time += duration(end - start);
 
 
 
             start = timeNow();
-            //queue_fib.insert(gen.random(MIN_PRIO, MAX_PRIO), 100);
-            //queue_fib.extractMax();
-            //queue_fib.findMax();
-            //queue_fib.modifyKey(ITEM_CHANGE, PRIORITY_MOD);
-            queue_fib.getSize();
+            for(size_t i = 0; i < LOOPS; i++)
+                queue_fib.insert(gen.random(MIN_PRIO, MAX_PRIO), 100);
+                //queue_fib.extractMax();
+                //queue_fib.findMax();
+                //queue_fib.modifyKey(ITEM_CHANGE, gen.random(MIN_PRIO, MAX_PRIO));
+                //queue_fib.getSize();
             end = timeNow();
             fib_time += duration(end - start);
         }
 
-        std::cout << "HEAP:  " << heap_time / LOOPS << std::endl;
-        std::cout << "LIST:  " << list_time / LOOPS << std::endl;
-        std::cout << "FIBB:  " << fib_time / LOOPS << std::endl;
+        std::cout << "HEAP:  " << heap_time / (LOOPS*LOOPS) << std::endl;
+        std::cout << "LIST:  " << list_time / (LOOPS*LOOPS) << std::endl;
+        std::cout << "FIBB:  " << fib_time / (LOOPS*LOOPS) << std::endl;
         std::cout << std::endl;
     }
 
