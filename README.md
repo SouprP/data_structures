@@ -15,7 +15,9 @@ A collection of projects to research diffrent data structures.
 
 - #### Priority Queue using Binary Heap
 
-- #### Priority Queue using X
+- #### Priority Queue using Linked List
+
+- #### Priority Queue using Fibonacci Heap
 
 ## Project 3
 
