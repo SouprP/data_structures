@@ -45,7 +45,7 @@ class HashTable{
          * 
         */
 
-        size_t hash(std::string& key){
+        size_t hash(std::string& key, HashType type){
             size_t s_int = 0;
 
             for(auto &k : key)
@@ -54,7 +54,7 @@ class HashTable{
 
             //std::cout << s_int << std::endl;
 
-            switch(hash_type){
+            switch(type){
                 // hα(x) = x mod m
                 case HashType::MOD:
                     return s_int % size;
@@ -77,14 +77,14 @@ class HashTable{
         }
 
         // temporarily use another type of hash
-        size_t hash(std::string& key, HashType other_type){
-            HashType temp = this->hash_type;
-            this->hash_type = other_type;
+        // size_t hash(std::string& key, HashType other_type){
+        //     HashType temp = this->hash_type;
+        //     this->hash_type = other_type;
 
-            size_t index = hash(key);
-            this->hash_type = temp;
-            return index;
-        }
+        //     size_t index = hash(key);
+        //     this->hash_type = temp;
+        //     return index;
+        // }
 
         size_t get_size(){
             return size;

@@ -118,7 +118,7 @@ class LinkedList{
             }
 
             // remove at the back
-            if(index >= size + 1){
+            if(index >= size){
                 remove_back();
                 return;
             }

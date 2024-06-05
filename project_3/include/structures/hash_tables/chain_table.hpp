@@ -24,7 +24,7 @@ class ChainHashTable : public HashTable<T>{
 
         void insert(std::string key, T value) override{
             // hash the key to an index
-            size_t index = this->hash(key);
+            size_t index = this->hash(key, hash_type);
             std::cout << "hash output: " << index << std::endl;
 
             // insert a new element
@@ -36,7 +36,7 @@ class ChainHashTable : public HashTable<T>{
         }
 
         void remove(std::string key) override{
-            size_t index = this->hash(key);
+            size_t index = this->hash(key, hash_type);
 
             LinkedList<Pair<T>*>* list = chain_List[index];
 
