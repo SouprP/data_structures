@@ -20,6 +20,7 @@ class HashTable{
         const int W = 1.0;
 
     protected:
+        HashType hash_type;
         size_t size;
 
     public:
@@ -44,7 +45,7 @@ class HashTable{
          * 
         */
 
-        size_t hash(std::string& key, HashType type){
+        size_t hash(std::string& key){
             size_t s_int = 0;
 
             for(auto &k : key)
@@ -53,16 +54,14 @@ class HashTable{
 
             //std::cout << s_int << std::endl;
 
-            switch(type){
+            switch(hash_type){
                 // hα(x) = x mod m
                 case HashType::MOD:
                     return s_int % size;
 
                 // hα(x) = ⌊(αx mod W )/(W /m)⌋
                 case HashType::MOD_X:
-                    // fix, doesnt work correctly
-                    return int( ((int(alfa * s_int)) % W) 
-                        / (W / size));
+                    return int(size*(alfa*s_int - int(alfa*s_int)));
                     //return 2;
 
                 case HashType::ALG:
@@ -75,6 +74,16 @@ class HashTable{
             // it should not go here
             return 0;
 
+        }
+
+        // temporarily use another type of hash
+        size_t hash(std::string& key, HashType other_type){
+            HashType temp = this->hash_type;
+            this->hash_type = other_type;
+
+            size_t index = hash(key);
+            this->hash_type = temp;
+            return index;
         }
 
         size_t get_size(){

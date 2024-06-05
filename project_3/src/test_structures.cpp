@@ -3,15 +3,17 @@
 #include <chrono>
 
 #include <structures/hash_tables/chain_table.hpp>
+#include <structures/hash_tables/cuckoo_table.hpp>
 
 // custom tests
 
 int main(){
     Generator gen;
 
-    HashTable<int>* table =  new ChainHashTable<int>(10, HashType::MOD);
-    
-    std::cout << table->get_size() << std::endl;
+    HashTable<int>* table =  new ChainHashTable<int>(10, HashType::MOD_X);
+    //HashTable<int>* table = new CuckooHashTable<int>(10, HashType::MOD);
+
+    ///std::cout << table->get_size() << std::endl;
     table->insert("donald tusk", 5);
     table->insert("tusk donald", 2);
     table->insert("morawiecki", 100);
