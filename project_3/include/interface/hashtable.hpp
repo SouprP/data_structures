@@ -21,30 +21,10 @@ class HashTable{
 
     protected:
         HashType hash_type;
+
         size_t size;
-
-    public:
-        /**
-         * 
-         *      INHERITED
-         * 
-        */
-        virtual void insert(std::string key, T value) = 0;
-        virtual void remove(std::string key) = 0;
-        virtual T get(std::string key) = 0;
-
-        // debug
-        // change it to something else
-        // return a vector of vectors?
-        virtual std::vector<T> get_values() = 0;
-
-
-        /**
-         * 
-         *      IMPLEMENTED
-         * 
-        */
-
+        size_t capacity;
+        
         size_t hash(std::string& key, HashType type){
             size_t s_int = 0;
 
@@ -75,6 +55,27 @@ class HashTable{
             return 0;
 
         }
+    public:
+        /**
+         * 
+         *      INHERITED
+         * 
+        */
+        virtual void insert(std::string key, T value) = 0;
+        virtual void remove(std::string key) = 0;
+        virtual T get(std::string key) = 0;
+
+        // debug
+        // change it to something else
+        // return a vector of vectors?
+        virtual std::vector<T> get_values() = 0;
+
+
+        /**
+         * 
+         *      IMPLEMENTED
+         * 
+        */
 
         // temporarily use another type of hash
         // size_t hash(std::string& key, HashType other_type){

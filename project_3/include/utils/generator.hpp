@@ -5,6 +5,7 @@
 #include <vector>
 #include <random>
 #include <chrono>
+#include <sstream>
 
 // alphabet for ASCII
 #define RAND_GEN_MAX std::pow(2, 8)
@@ -15,7 +16,7 @@
 class Generator{
     public:
         int random(size_t low, size_t high){
-            return rand() % high + low;
+            return rand() % (high - low) + low;
         };
 
         std::vector<int> generate_int(size_t size){
@@ -30,6 +31,35 @@ class Generator{
             return buffer;
         };
 
+        std::vector<std::string> generate_string(size_t size){
+            std::vector<std::string> buffer;
+
+            for(size_t i = 0; i < size; i++){
+                int length = random(5, 25);
+                //std::stringstream buffer1;
+                std::string s_buffer;
+                s_buffer.reserve(length);
+
+                while(s_buffer.size() < length){
+                    int capital = random(0, 2);
+                    //std::cout << capital << std::endl;
+                    int c = random(65, 90 + 1);
+                    //std::cout << c << std::endl;
+
+                    if(capital){
+                        s_buffer += char(c);
+                        continue;
+                    }
+
+                    s_buffer += char(c + CAPITAL_ADD);
+                }
+
+                buffer.push_back(s_buffer);
+            }
+
+            return buffer;
+        }
+ 
         Generator(){
             srand(time(NULL));
         };
