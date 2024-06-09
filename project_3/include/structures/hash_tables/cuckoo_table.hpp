@@ -7,6 +7,8 @@
 template<typename T>
 class CuckooHashTable : public HashTable<T>{
     private:
+        HashType other_hash;
+
         Pair<T>** arr1;
         Pair<T>** arr2;
 
@@ -18,9 +20,10 @@ class CuckooHashTable : public HashTable<T>{
         }
 
     public:
-        CuckooHashTable(size_t size, HashType hash_type){
+        CuckooHashTable(size_t size, HashType hash_type, HashType other_hash){
             this->size = size;
             this->hash_type = hash_type;
+            this->other_hash = other_hash;
 
             arr1 = new Pair<T>*[size];
             arr2 = new Pair<T>*[size];

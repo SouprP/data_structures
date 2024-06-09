@@ -4,7 +4,6 @@
 #include <cstddef>
 #include <string>
 #include <vector>
-#include <uuid/uuid.h>
 
 enum HashType{
     MOD, // normal modulo
