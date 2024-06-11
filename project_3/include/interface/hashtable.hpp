@@ -16,32 +16,37 @@ enum HashType{
 template<typename T>
 class HashTable{
     private:
-        const double alfa = 0.6180339887;
-        // const int W = 1.0;
-        const size_t a = 2654435769; // example constant, chosen to be relatively prime to 2^w
-        const size_t w = 64; // fixed machine word size in bits
-        //const size_t m = log2(size); // log base 2 of table size
+        const double alfa = 0.6180339887; // golden ratio - 1 
+        const size_t a = 2654435769; // constant relatively prime to 2^w
+        const size_t w = 64; // machine word size in bits
 
         const double phi = 1.6180339887; // golden ratio
         const size_t a_m = static_cast<size_t>(pow(2, 64) / phi); // 64-bit multiplier
-       // const size_t w = 64; // fixed machine word size in bits
 
     protected:
         HashType hash_type;
 
         size_t size;
         size_t capacity;
+        size_t collision_amount;
         
         size_t hash(std::string& key, HashType type){
             size_t s_int = 0;
             //std::cout << "hash size: " << this->size << std::endl; 
-            std::cout << "hash capacity: " << this->capacity << std::endl; 
+            //std::cout << "hash capacity: " << this->capacity << std::endl; 
 
+            unsigned long djb2 = 5381;
+            //for(auto &k : key)
+            //    s_int += int(k);
+
+            // transform the string into a number using djb2
+            // using djb2 instead of a simple int(k)
+            // proved to be more a more effective way of doing this
+            // (less collisions)
             for(auto &k : key)
-                s_int += int(k);
-                //std::cout << k << std::endl;
+                djb2 = ((djb2 << 5) + djb2) + int(k);
 
-            //std::cout << s_int << std::endl;
+            s_int = djb2;
             const size_t m = log2(size); // log base 2 of table size
 
             switch(type){
@@ -51,23 +56,18 @@ class HashTable{
 
                 // hα(x) = ⌊(αx mod W )/(W /m)⌋
                 case HashType::MOD_X:
-                    //return int(size*(alfa*s_int - int(alfa*s_int)));
-                    // const size_t a = 2654435769; // example constant, chosen to be relatively prime to 2^w
-                    // const size_t w = 64; // fixed machine word size in bits
                     return (a * s_int) >> (w - m);
-                    //return 2;
 
+                // not used + it's not even aglebraic hashing
                 case HashType::ALG:
                     return int(size*(alfa*s_int*2 - int(alfa*s_int*2)));
 
+                // fibonacci hashing
                 case HashType::FIB:
-                    // const double phi = 1.6180339887; // golden ratio
-                    // const size_t a = static_cast<size_t>(pow(2, 64) / phi); // 64-bit multiplier
-                    // const size_t w = 64; // fixed machine word size in bits
                     return (a_m * s_int) >> (w - (size_t) log2(size));
             }
 
-            // it should not go here
+            // it should not get here
             return 0;
 
         }
@@ -86,25 +86,12 @@ class HashTable{
         // return a vector of vectors?
         virtual std::vector<T> get_values() = 0;
 
-
-        /**
-         * 
-         *      IMPLEMENTED
-         * 
-        */
-
-        // temporarily use another type of hash
-        // size_t hash(std::string& key, HashType other_type){
-        //     HashType temp = this->hash_type;
-        //     this->hash_type = other_type;
-
-        //     size_t index = hash(key);
-        //     this->hash_type = temp;
-        //     return index;
-        // }
-
         size_t get_size(){
             return size;
+        }
+
+        size_t get_col_amount(){
+            return collision_amount;
         }
 };
 

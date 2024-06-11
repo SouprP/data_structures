@@ -7,13 +7,17 @@
 #include <chrono>
 #include <sstream>
 
-// alphabet for ASCII
+
 #define RAND_GEN_MAX std::pow(2, 8)
 #define ALPHABET_MIN -25
 #define ALPHABET_MAX 90
 #define CAPITAL_ADD 32
+
 #define MAX_KEY_LENGTH std::pow(256, 2)
-#define MIN_KEY_LENGTH 1
+#define MIN_KEY_LENGTH 128*128
+
+#define ASCII_MAX 126
+#define ASCII_MIN 33
 
 class Generator{
     public:
@@ -38,25 +42,25 @@ class Generator{
 
             for(size_t i = 0; i < size; i++){
                 int length = random(MIN_KEY_LENGTH, MAX_KEY_LENGTH);
-                //std::stringstream buffer1;
                 std::string s_buffer;
                 s_buffer.reserve(length);
 
                 while(s_buffer.size() < length){
-                    int capital = random(0, 2);
-                    //std::cout << capital << std::endl;
-                    int c = random(65, 90 + 1);
-                    //std::cout << c << std::endl;
+                    //int capital = random(0, 2);
+                    //int c = random(65, 90 + 1);
 
-                    if(capital){
-                        s_buffer += char(c);
-                        continue;
-                    }
+                    // if(capital){
+                    //     s_buffer += char(c);
+                    //     continue;
+                    // }
 
-                    s_buffer += char(c + CAPITAL_ADD);
+                    // s_buffer += char(c + CAPITAL_ADD);
+                    int c = random(ASCII_MIN, ASCII_MAX + 1);
+                    s_buffer += char(c);
                 }
 
                 buffer.push_back(s_buffer);
+                std::cout << i << std::endl;
             }
 
             return buffer;

@@ -179,6 +179,10 @@ class LinkedList{
             }
             return temp;
         }
+
+        size_t get_size(){
+            return size;
+        }
 };
 
 #endif

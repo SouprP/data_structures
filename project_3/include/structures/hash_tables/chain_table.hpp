@@ -9,11 +9,13 @@ class ChainHashTable : public HashTable<T>{
     private:
         HashType hash_type;
 
+        // array of all the the lists
         LinkedList<Pair<T>*>** chain_List;
 
     public:
         ChainHashTable(size_t size, HashType hash_type){
             this->size = size;
+            this->collision_amount = 0;
             this->hash_type = hash_type;
 
             // setup the list of linked lists
@@ -25,29 +27,30 @@ class ChainHashTable : public HashTable<T>{
         void insert(std::string key, T value) override{
             // hash the key to an index
             size_t index = this->hash(key, hash_type);
-            std::cout << "hash output: " << index << std::endl;
 
             // insert a new element
             Pair<T>* new_pair = new Pair<T>(key, value);
-            chain_List[index]->add_front(new_pair);
+            if(chain_List[index]->get_size() > 0)
+                this->collision_amount++;
 
-            // for(auto obj : chain_List[index]->get_values())
-            //     std::cout << obj->key << std::endl;
+            chain_List[index]->add_front(new_pair);
         }
 
         void remove(std::string key) override{
+            // hash the key to an index
             size_t index = this->hash(key, hash_type);
 
+            // get the list where the Pair<T>* is held
             LinkedList<Pair<T>*>* list = chain_List[index];
 
+            // search for it
+            // and remove it at it's list index using list.remove()
             size_t i = 1;
-            //std::cout << "size" << list->get_values().size() << std::endl;
             for(Pair<T>* pair : list->get_values()){
-                //std::cout << "Current pair: " << pair->key << std::endl;
                 if(pair->key == key){
-                    //std::cout << "Removed" << std::endl;
-                    //std::cout << "i: " << i << std::endl;
-                    //std::cout << "get: " << list->get(i)->key << std::endl;
+                    if(list->get_size() > 1)
+                        this->collision_amount--;
+
                     list->remove(i);
                     break;
                 }
@@ -58,16 +61,22 @@ class ChainHashTable : public HashTable<T>{
         }
 
         T get(std::string key) override{
+            // hash the key to an index
             size_t index = this->hash(key, hash_type);
 
+            // get the list where the Pair<T>* is held
             LinkedList<Pair<T>*>* list = chain_List[index];
 
+            // look at all the values in the list
+            // and compare them to our key
             for(Pair<T>* pair : list->get_values())
                 if(pair->key == key)
                     return pair->value;
 
         }
 
+        // yea, it does not return a vector of values
+        // it functions as a display function pretty much
         std::vector<T> get_values() override{
             for(size_t index = 0; index < this->size; index++){
                 std::cout << "========" << index << std::endl;
