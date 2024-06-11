@@ -12,6 +12,8 @@
 #define ALPHABET_MIN -25
 #define ALPHABET_MAX 90
 #define CAPITAL_ADD 32
+#define MAX_KEY_LENGTH std::pow(256, 2)
+#define MIN_KEY_LENGTH 1
 
 class Generator{
     public:
@@ -35,7 +37,7 @@ class Generator{
             std::vector<std::string> buffer;
 
             for(size_t i = 0; i < size; i++){
-                int length = random(5, 25);
+                int length = random(MIN_KEY_LENGTH, MAX_KEY_LENGTH);
                 //std::stringstream buffer1;
                 std::string s_buffer;
                 s_buffer.reserve(length);
