@@ -42,6 +42,7 @@ class CuckooHashTable : public HashTable<T>{
             this->hash_type = hash_types[current_hash_index];
             this->other_hash = hash_types[(current_hash_index + 1) % hash_types.size()];
 
+            // copy contents from old arrays
             std::vector<Pair<T>*> elements;
             for (size_t i = 0; i < old_size; i++) {
                 if (old_arr1[i] != nullptr) {
@@ -52,6 +53,7 @@ class CuckooHashTable : public HashTable<T>{
                 }
             }
 
+            // insert all the elements from old_arrs to new containers
             for (auto elem : elements) {
                 insert(elem->key, elem->value);
                 delete elem;

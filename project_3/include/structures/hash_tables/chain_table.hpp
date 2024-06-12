@@ -30,8 +30,11 @@ class ChainHashTable : public HashTable<T>{
 
             // insert a new element
             Pair<T>* new_pair = new Pair<T>(key, value);
-            if(chain_List[index]->get_size() > 0)
+            if(chain_List[index]->get_size() >= 1){
+                std::cout << "col add: " << chain_List[index]->get_size()
+                    << std::endl;
                 this->collision_amount++;
+            }
 
             chain_List[index]->add_front(new_pair);
         }
