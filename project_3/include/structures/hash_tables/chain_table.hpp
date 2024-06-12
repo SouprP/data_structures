@@ -31,8 +31,8 @@ class ChainHashTable : public HashTable<T>{
             // insert a new element
             Pair<T>* new_pair = new Pair<T>(key, value);
             if(chain_List[index]->get_size() >= 1){
-                std::cout << "col add: " << chain_List[index]->get_size()
-                    << std::endl;
+                //std::cout << "col add: " << chain_List[index]->get_size()
+                //    << std::endl;
                 this->collision_amount++;
             }
 
@@ -76,6 +76,7 @@ class ChainHashTable : public HashTable<T>{
                 if(pair->key == key)
                     return pair->value;
 
+            return T();
         }
 
         // yea, it does not return a vector of values

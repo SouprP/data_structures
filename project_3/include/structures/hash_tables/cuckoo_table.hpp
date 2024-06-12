@@ -163,6 +163,8 @@ class CuckooHashTable : public HashTable<T>{
             if (arr2[hash2] != nullptr && arr2[hash2]->key == key) {
                 return arr2[hash2]->value;
             }
+
+            return T();
         }
 
         // yea, it does not return a vector of values

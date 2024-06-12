@@ -1,10 +1,13 @@
 #ifndef OPEN_ADDR_HASHTABLE_HPP_
 #define OPEN_ADDR_HASHTABLE_HPP_
 
+#include <interface/hashtable.hpp>
 #include<interface/hashtable.hpp>
 #include <utils/node.hpp>
 #include <vector>
 #include <string>
+
+
 
 template<typename T>
 class OpenAddrTable : public HashTable<T> {
@@ -12,8 +15,32 @@ class OpenAddrTable : public HashTable<T> {
         Pair<T>** arr;
 
         size_t probe(size_t hash, size_t i) const {
-            // Quadratic probing
-            return (hash + i * i) % this->size;
+            // Linear probing
+            return (hash + i) % this->size;
+        }
+
+        void resize() {
+            size_t new_size = this->size * 2;
+            Pair<T>** new_arr = new Pair<T>*[new_size];
+            for (size_t i = 0; i < new_size; ++i) {
+                new_arr[i] = nullptr;
+            }
+
+            // Rehash all existing elements into the new array
+            for (size_t i = 0; i < this->size; ++i) {
+                if (arr[i] != nullptr) {
+                    size_t new_hash = this->hash(arr[i]->key, this->hash_type);
+                    size_t j = 0;
+                    while (new_arr[probe(new_hash, j)] != nullptr) {
+                        j++;
+                    }
+                    new_arr[probe(new_hash, j)] = arr[i];
+                }
+            }
+
+            delete[] arr;
+            arr = new_arr;
+            this->size = new_size;
         }
 
     public:
@@ -39,6 +66,10 @@ class OpenAddrTable : public HashTable<T> {
         }
 
         void insert(std::string key, T value) override {
+            if (this->capacity >= this->size * 0.7) {
+                resize();
+            }
+
             size_t hash = this->hash(key, this->hash_type);
             size_t i = 0;
 
@@ -69,6 +100,17 @@ class OpenAddrTable : public HashTable<T> {
                 delete arr[idx];
                 arr[idx] = nullptr;
                 this->capacity--;
+
+                // Rehash subsequent elements in the same cluster
+                size_t j = i + 1;
+                while (arr[probe(hash, j)] != nullptr) {
+                    Pair<T>* temp = arr[probe(hash, j)];
+                    arr[probe(hash, j)] = nullptr;
+                    this->capacity--;
+                    insert(temp->key, temp->value);
+                    delete temp;
+                    j++;
+                }
             }
         }
 
@@ -91,13 +133,9 @@ class OpenAddrTable : public HashTable<T> {
         std::vector<T> get_values() override {
             std::vector<T> values;
             for (size_t i = 0; i < this->size; ++i) {
-                if(arr[i] != nullptr){
-                    std::cout << arr[i]->key;
-                }else {
-                    std::cout << "---";
+                if (arr[i] != nullptr) {
+                    values.push_back(arr[i]->value);
                 }
-
-                std::cout << std::endl;
             }
             return values;
         }

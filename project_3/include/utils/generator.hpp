@@ -60,7 +60,7 @@ class Generator{
                 }
 
                 buffer.push_back(s_buffer);
-                std::cout << i << std::endl;
+                //std::cout << i << std::endl;
             }
 
             return buffer;
