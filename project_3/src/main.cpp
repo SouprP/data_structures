@@ -24,7 +24,7 @@ typedef std::chrono::high_resolution_clock::time_point TimeVar;
 //     DATA_SIZE_3, DATA_SIZE_4, DATA_SIZE_5};
 
 //std::vector<size_t> SIZES = {1000};
-std::vector<size_t> SIZES = {DATA_SIZE_2};
+std::vector<size_t> SIZES = {DATA_SIZE_3};
 // efficiency tests
 
 int main(int argc, char* argv[]){
@@ -46,24 +46,28 @@ int main(int argc, char* argv[]){
         for(uint8_t index = 0; index < LOOPS; index++){
             Generator gen = Generator();
 
-            HashTable<int>* chain_table =  new ChainHashTable<int>(size, HashType::MOD_X);
-            HashTable<int>* addr_table = new OpenAddrTable<int>(size, HashType::MOD_X);
-            HashTable<int>* cuckoo_table = new CuckooHashTable<int>(size, HashType::MOD, HashType::MOD_X, HashType::FIB);
+            // HashTable<int>* chain_table =  new ChainHashTable<int>(size, HashType::MOD_X);
+            // HashTable<int>* addr_table = new OpenAddrTable<int>(size, HashType::FIB);
+            // HashTable<int>* cuckoo_table = new CuckooHashTable<int>(size, HashType::MOD, HashType::MOD_X, HashType::FIB);
+
+            HashTable<int>* chain_table =  new ChainHashTable<int>(size, HashType::MOD);
+            HashTable<int>* addr_table = new ChainHashTable<int>(size, HashType::MOD_X);
+            HashTable<int>* cuckoo_table = new ChainHashTable<int>(size, HashType::FIB);
 
 
             std::vector<std::string> items = gen.generate_string(size);
             std::vector<std::string> remove_keys = {};
 
-            //std::cout << "generated" << std::endl;
+            std::cout << "generated" << std::endl;
             
             for(size_t i = 0; i < LOOPS; i++)
                 remove_keys.push_back(items[gen.random(0, items.size())]);
 
             for(std::string key : items){
                 int value = gen.random(0, 10000);
-                //chain_table->insert(key, value);
+                chain_table->insert(key, value);
                 addr_table->insert(key, value);
-                //cuckoo_table->insert(key, value);
+                cuckoo_table->insert(key, value);
             }
 
             std::cout << "inserted!" << std::endl;
